@@ -79,7 +79,7 @@ public class ServerCommand {
         Player pl = gameData.getPlayer(socket);
         String s [] = in.split("\\;");
         gameData.notifyObservers(pl, "@kill;" + s[1] + ";" + s[2] + ";" + s[3] + ";" + s[4] + ";"
-                + s[5] + ";" + s[6] + ";");
+                + s[5] + ";" + s[6] + ";" + s[7] + ";" + s[8] + ";");
         for (Player p : gameData.getPlayers()) {
             if (p.getHashCode() != pl.getHashCode()) p.setChipNumber(p.getChipNumber() - 1);
             if (p.getChipNumber() <= 0) {
@@ -99,7 +99,8 @@ public class ServerCommand {
         GameData gameData = getGameData(socket);
         Player pl = gameData.getPlayer(socket);
         String s [] = in.split("\\;");
-        gameData.notifyObservers(pl, "@turn;" + s[1] + ";" + s[2] + ";" + s[3] + ";" + s[4] + ";");
+        gameData.notifyObservers(pl, "@turn;" + s[1] + ";" + s[2] + ";" + s[3] + ";" + s[4] + ";"
+                + s[5] + ";");
     }
     private void connection(Socket socket, String in) {
         server.response(socket, "@connected;");

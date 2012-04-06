@@ -9,7 +9,6 @@ public class Server {
     private Socket socket;
     private PrintWriter out;
     private ServerCommand serverCommand;
-    private PlayerThread playerThread;
     private PlayersData playersData = new PlayersData();
 
     public static void main(String [] args) {
@@ -22,7 +21,7 @@ public class Server {
             System.out.println("Server started.");
             while(true) {
                 socket = serverSocket.accept();
-                playerThread = new PlayerThread(socket, this);
+                new PlayerThread(socket, this);
             }
         } catch (IOException e) {
             e.printStackTrace();
