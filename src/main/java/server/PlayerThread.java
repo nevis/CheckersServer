@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class PlayerThread extends Thread {
     private Socket player;
     private Server server;
-
+    private int gameType = 0;
     public PlayerThread(Socket player, Server server) {
         this.player = player;
         this.server = server;
@@ -21,11 +21,19 @@ public class PlayerThread extends Thread {
             String str;
             while (true) {
                 str = in.nextLine();
-                if (str.split("\\;")[0].equals("@exit")) {
-                    server.getServerCommand().run(player, str);
+                switch (gameType) {
+                    case 0: {  //server
+                        server.getServerCommand().run(player, str);
+                        break;
+                    } case 1: {  //checkers
+                        server.getCheckersCommand().run(player, str);
+                        break;
+                    }
+                }
+                if (str.split("\\;")[0].equals("@game")) {
+                    gameType = Integer.parseInt(str.split("\\;")[1]);
+                } else if (str.split("\\;")[0].equals("@exit")) {
                     break;
-                } else {
-                    server.getServerCommand().run(player, str);
                 }
             }
         } catch (IOException ex) {
