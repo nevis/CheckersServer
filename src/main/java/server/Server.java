@@ -8,9 +8,6 @@ import java.net.Socket;
 import java.util.List;
 
 public class Server {
-    private ServerSocket serverSocket;
-    private Socket socket;
-    private PrintWriter out;
     private ServerCommand serverCommand = new ServerCommand(this);
     private CheckersCommand checkersCommand = new CheckersCommand(this);
 
@@ -19,10 +16,10 @@ public class Server {
     }
     public Server() {
         try {
-            serverSocket = new ServerSocket(5869);
+            ServerSocket serverSocket = new ServerSocket(5869);
             System.out.println("Server started.");
             while(true) {
-                socket = serverSocket.accept();
+                Socket socket = serverSocket.accept();
                 new PlayerThread(socket, this);
             }
         } catch (IOException e) {
@@ -31,7 +28,7 @@ public class Server {
     }
     public void response(Socket s, String message) {
         try {
-            out = new PrintWriter(new OutputStreamWriter(s.getOutputStream()), true);
+            PrintWriter out = new PrintWriter(new OutputStreamWriter(s.getOutputStream()), true);
             out.println(message);
         } catch (IOException ex) {
             ex.printStackTrace();
